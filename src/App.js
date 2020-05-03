@@ -1,24 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Route, Switch, NavLink } from "react-router-dom";
+
+import Home from "./components/Home";
+import About from "./components/About";
+
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="nav">
+        <ul>
+          <li>
+            <NavLink exact to="/" activeClassName="active">
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/about" activeClassName="active">
+              About
+            </NavLink>
+          </li>
+        </ul>
+      </div>
+      <Route
+        render={({ location }) => (
+          <TransitionGroup>
+            <CSSTransition key={location.key} timeout={300} classNames="fade">
+              <Switch location={location}>
+                <Route exact path="/" component={Home} />
+                <Route path="/" component={About} />
+              </Switch>
+            </CSSTransition>
+          </TransitionGroup>
+        )}
+      />
     </div>
   );
 }
